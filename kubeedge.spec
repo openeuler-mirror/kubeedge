@@ -15,7 +15,6 @@ License: Apache-2.0
 URL: https://github.com/kubeedge/kubeedge
 Source0: https://github.com/kubeedge/kubeedge/archive/refs/tags/v%{version}.tar.gz
 BuildRequires: golang glibc-static make tar systemd git
-Requires: mosquitto
 
 Patch0001: 0001-rpminstaller-add-support-for-openEuler.patch
 
@@ -27,6 +26,7 @@ synchronization between cloud and edge.
 
 %package keadm
 Summary: Keadm is used to install the cloud and edge components of KubeEdge.
+Requires: mosquitto
 Provides: keadm = %{version}
 
 %description keadm
@@ -48,6 +48,7 @@ This package contains the cloudcore binary for the cloud node.
 
 %package edgecore
 Summary: KubeEdge Lightweight Edge Agent (EdgeCore)
+Requires: mosquitto
 Provides: edgecore = %{version}
 
 %description edgecore
@@ -59,6 +60,7 @@ This package contains the edgecore binary for the edge node.
 
 %package edgesite
 Summary: A GRPC agent/server
+Requires: mosquitto
 Provides: edgesite-agent = %{version}
 Provides: edgesite-server = %{version}
 
