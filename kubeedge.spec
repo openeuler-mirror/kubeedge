@@ -9,7 +9,7 @@
 
 Name: kubeedge
 Version: 1.8.0
-Release: 1
+Release: 2
 Summary: Kubernetes Native Edge Computing Framework
 License: Apache-2.0
 URL: https://github.com/kubeedge/kubeedge
@@ -97,13 +97,13 @@ install -dm0750 %{buildroot}%{_sysconfdir}/kubeedge
 install -dm0750 %{buildroot}%{_sysconfdir}/kubeedge/config
 install -dm0750 %{buildroot}%{_sysconfdir}/kubeedge/tools
 # install binaries
-install -Dpm0550 ./_output/local/bin/keadm %{buildroot}%{_prefix}/local/bin/keadm
-install -Dpm0550 ./_output/local/bin/cloudcore %{buildroot}%{_prefix}/local/bin/cloudcore
-install -Dpm0550 ./_output/local/bin/edgecore %{buildroot}%{_prefix}/local/bin/edgecore
-install -Dpm0550 ./_output/local/bin/admission %{buildroot}%{_prefix}/local/bin/admission
-install -Dpm0550 ./_output/local/bin/csidriver %{buildroot}%{_prefix}/local/bin/csidriver
-install -Dpm0550 ./_output/local/bin/edgesite-agent %{buildroot}%{_prefix}/local/bin/edgesite-agent
-install -Dpm0550 ./_output/local/bin/edgesite-server %{buildroot}%{_prefix}/local/bin/edgesite-server
+install -Dp ./_output/local/bin/keadm %{buildroot}%{_prefix}/local/bin/keadm
+install -Dp ./_output/local/bin/cloudcore %{buildroot}%{_prefix}/local/bin/cloudcore
+install -Dp ./_output/local/bin/edgecore %{buildroot}%{_prefix}/local/bin/edgecore
+install -Dp ./_output/local/bin/admission %{buildroot}%{_prefix}/local/bin/admission
+install -Dp ./_output/local/bin/csidriver %{buildroot}%{_prefix}/local/bin/csidriver
+install -Dp ./_output/local/bin/edgesite-agent %{buildroot}%{_prefix}/local/bin/edgesite-agent
+install -Dp ./_output/local/bin/edgesite-server %{buildroot}%{_prefix}/local/bin/edgesite-server
 # generate default configs for both cloudcore and edgecore
 ./_output/local/bin/cloudcore --defaultconfig > cloudcore.example.yaml
 ./_output/local/bin/edgecore --defaultconfig > edgecore.example.yaml
@@ -137,7 +137,7 @@ install -Dpm0550 checksum_%{tarball_name}.tar.gz.txt %{buildroot}%{_sysconfdir}/
 
 %files keadm
 %license LICENSE
-%{_prefix}/local/bin/keadm
+%attr(550,root,root) %{_prefix}/local/bin/keadm
 %{_sysconfdir}/kubeedge/cloudcore.service
 %{_sysconfdir}/kubeedge/edgecore.service
 %{_sysconfdir}/kubeedge/%{tarball_name}.tar.gz
@@ -145,9 +145,9 @@ install -Dpm0550 checksum_%{tarball_name}.tar.gz.txt %{buildroot}%{_sysconfdir}/
 
 %files cloudcore
 %license LICENSE
-%{_prefix}/local/bin/cloudcore
-%{_prefix}/local/bin/admission
-%{_prefix}/local/bin/csidriver
+%attr(550,root,root) %{_prefix}/local/bin/cloudcore
+%attr(550,root,root) %{_prefix}/local/bin/admission
+%attr(550,root,root) %{_prefix}/local/bin/csidriver
 %{_unitdir}/cloudcore.service
 %{_sysconfdir}/kubeedge/crds
 %{_sysconfdir}/kubeedge/tools/certgen.sh
@@ -155,15 +155,18 @@ install -Dpm0550 checksum_%{tarball_name}.tar.gz.txt %{buildroot}%{_sysconfdir}/
 
 %files edgecore
 %license LICENSE
-%{_prefix}/local/bin/edgecore
+%attr(550,root,root) %{_prefix}/local/bin/edgecore
 %{_unitdir}/edgecore.service
 %config(noreplace) %{_sysconfdir}/kubeedge/config/edgecore.example.yaml
 
 %files edgesite
 %license LICENSE
-%{_prefix}/local/bin/edgesite-agent
-%{_prefix}/local/bin/edgesite-server
+%attr(550,root,root) %{_prefix}/local/bin/edgesite-agent
+%attr(550,root,root) %{_prefix}/local/bin/edgesite-server
 
 %changelog
-* Thu Sep 18 2021 Poorunga<2744323@qq.com> - 1.8.0-1
+* Thu Feb 10 2022 Yuncheng Zhu<zhuyuncheng@huawei.com> - 1.8.0-2
+- Fix compile error.
+
+* Sat Sep 18 2021 Poorunga<2744323@qq.com> - 1.8.0-1
 - Package init
