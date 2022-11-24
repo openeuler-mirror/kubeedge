@@ -4,12 +4,15 @@
 %ifarch aarch64
 %global gohostarch arm64
 %endif
+%ifarch riscv64
+%global gohostarch riscv64
+%endif
 
 %define debug_package %{nil}
 
 Name: kubeedge
 Version: 1.8.0
-Release: 2
+Release: 3
 Summary: Kubernetes Native Edge Computing Framework
 License: Apache-2.0
 URL: https://github.com/kubeedge/kubeedge
@@ -17,6 +20,9 @@ Source0: https://github.com/kubeedge/kubeedge/archive/refs/tags/v%{version}.tar.
 BuildRequires: golang glibc-static make tar systemd git
 
 Patch0001: 0001-rpminstaller-add-support-for-openEuler.patch
+%ifarch riscv64
+Patch0002: fix-undefined-parseCPUInfo.patch
+%endif
 
 %description
 KubeEdge is an open source system for extending native containerized application
@@ -165,6 +171,9 @@ install -Dpm0550 checksum_%{tarball_name}.tar.gz.txt %{buildroot}%{_sysconfdir}/
 %attr(550,root,root) %{_prefix}/local/bin/edgesite-server
 
 %changelog
+* Thu Nov 24 2022 misaka00251 <liuxin@iscas.ac.cn> - 1.8.0-3
+- Add riscv64 support
+
 * Thu Feb 10 2022 Yuncheng Zhu<zhuyuncheng@huawei.com> - 1.8.0-2
 - Fix compile error.
 
