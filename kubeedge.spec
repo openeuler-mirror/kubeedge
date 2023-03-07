@@ -9,7 +9,7 @@
 
 Name: kubeedge
 Version: 1.8.0
-Release: 2
+Release: 3
 Summary: Kubernetes Native Edge Computing Framework
 License: Apache-2.0
 URL: https://github.com/kubeedge/kubeedge
@@ -82,7 +82,7 @@ ln -sf $PWD $GOPATH/src/github.com/%{name}/%{name}
 # start to build
 cd %{workspace}
 # set go flags
-export GOLDFLAGS="-buildid=none -buildmode=pie -extldflags=-ftrapv -extldflags=-zrelro -extldflags=-znow -linkmode=external -extldflags=-static"
+export GOLDFLAGS="-buildid=none -buildmode=pie -extldflags=-ftrapv -extldflags=-zrelro -extldflags=-znow -linkmode=external -extldflags=-static -extldflags '-Wl,-s'"
 # build binaries
 make all
 # build csidriver
@@ -165,6 +165,9 @@ install -Dpm0550 checksum_%{tarball_name}.tar.gz.txt %{buildroot}%{_sysconfdir}/
 %attr(550,root,root) %{_prefix}/local/bin/edgesite-server
 
 %changelog
+* Tue Mar 7 2023 caodongxia<caodongxia@h-partners.com> - 1.8.0-3
+- Fix not stripped problem
+
 * Thu Feb 10 2022 Yuncheng Zhu<zhuyuncheng@huawei.com> - 1.8.0-2
 - Fix compile error.
 
